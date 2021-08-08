@@ -54,10 +54,13 @@ void dump1::Loop( int display_event, float rhophi_scale )
     
     //definte arrays of phi and eta values
     
-    double x_eta[100000];
-    double y_phi[100000];
-    int i = 0;
+    Double_t x_eta[100000];
+    Double_t y_phi[100000];
+    Int_t i = 0;
     
+    //declare TGraph 
+    TGraph *g = new TGraph();
+    g -> SetMaximum(10); //set y max
     
     for ( int jentry=first_event; jentry<=last_event; jentry++ ) {
         Long64_t ientry = LoadTree(jentry);
@@ -72,6 +75,12 @@ void dump1::Loop( int display_event, float rhophi_scale )
             x_eta[i] = eta;
             y_phi[i] = phi;
             printf("%lf", x_eta[i]);
+            //moved the following into the for-loop
+    g -> SetPoint(i,x_eta[i],y_phi[i]);
+    can1 -> cd();
+    g->Draw("ALP");
+    can1 -> Update() ;
+    can1 -> Draw() ;
             i++;
         }//gpi loop end
         char answer[100] ;
@@ -79,9 +88,7 @@ void dump1::Loop( int display_event, float rhophi_scale )
             scanf( "%s", answer ) ;
              if ( strcmp( answer, "q") == 0 ) return ;
     }//jentry loop end
-    TGraph *g = new TGraph(i,x_eta,y_phi);
-    g->Draw("ap");
-    can1 -> Update() ; can1 -> Draw() ;
+    //declaration ad graphing of TGraph g was here
 
 
 
