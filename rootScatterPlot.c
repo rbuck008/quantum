@@ -60,8 +60,12 @@ void dump1::Loop( int display_event, float rhophi_scale )
     
     //declare TGraph 
     TGraph *g = new TGraph();
-    g -> SetMaximum(10); //set y max
-    
+    g -> SetTitle("phi vs eta plane; eta; phi");
+    g -> SetMaximum(6); //set y max
+    g -> SetMarkerStyle(8); 
+    g -> SetMarkerColor(kBlue); 
+    g -> SetMarkerSize(0.5);
+     
     for ( int jentry=first_event; jentry<=last_event; jentry++ ) {
         Long64_t ientry = LoadTree(jentry);
              if (ientry < 0) break;
@@ -78,7 +82,7 @@ void dump1::Loop( int display_event, float rhophi_scale )
             //moved the following into the for-loop
     g -> SetPoint(i,x_eta[i],y_phi[i]);
     can1 -> cd();
-    g->Draw("ALP");
+    g->Draw("AP");
     can1 -> Update() ;
     can1 -> Draw() ;
             i++;
