@@ -75,7 +75,14 @@ void dump1::Loop( int display_event, float rhophi_scale )
         for ( unsigned int gpi=0; gpi < GenParticles->size() ; gpi++ ) {
             double eta = 99. ;
             if ( GenParticles->at(gpi).Pt() > 0 ) eta = GenParticles->at(gpi).Eta();
-            double phi = GenParticles->at(gpi).Phi() ;
+            
+             
+            if ( eta == 99. ) break;    //Note: Eta values ocassionally go to 99.000000, for now I am going to consider it some sort of error and remove them
+                                        //The eta values should be changed by the line of code above
+            
+            
+            double phi = GenParticles->at(gpi).Phi();
+            
             x_eta[i] = eta;
             y_phi[i] = phi;
             printf("%lf", x_eta[i]);
